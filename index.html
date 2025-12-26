@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memriq AI — AI Content Studio</title>
+    <meta name="description" content="AI content studio producing podcasts and educational content on generative AI, RAG systems, and AI engineering.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'memriq': {
+                            'dark': '#0a0a0f',
+                            'darker': '#050508',
+                            'card': '#12121a',
+                            'border': '#1e1e2e',
+                            'cyan': '#00d4ff',
+                            'cyan-dim': '#00a8cc',
+                            'purple': '#8b5cf6',
+                            'text': '#e4e4e7',
+                            'muted': '#71717a',
+                        }
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Outfit', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom animations */
+        @keyframes glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .glow-effect {
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        .float-effect {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Grid pattern background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Radial glow */
+        .radial-glow {
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+        }
+        
+        /* Card hover effect */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 20px 40px -20px rgba(0, 212, 255, 0.2);
+        }
+        
+        /* Link hover underline */
+        .link-underline {
+            position: relative;
+        }
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+        .link-underline:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-memriq-dark text-memriq-text font-sans antialiased">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-memriq-darker/80 backdrop-blur-md border-b border-memriq-border">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="font-mono font-bold text-xl tracking-tight">
+                    <span class="text-memriq-cyan">▲</span> MEMRIQ<span class="text-memriq-muted">.AI</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#podcast" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors link-underline">Podcast</a>
+                    <a href="#book" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors link-underline">Book</a>
+                    <a href="#about" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors link-underline">About</a>
+                </div>
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-memriq-muted hover:text-memriq-text">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <div class="flex flex-col gap-4">
+                    <a href="#podcast" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors">Podcast</a>
+                    <a href="#book" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors">Book</a>
+                    <a href="#about" class="text-sm text-memriq-muted hover:text-memriq-text transition-colors">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden grid-bg">
+        <!-- Background effects -->
+        <div class="absolute inset-0 radial-glow"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-memriq-cyan/5 rounded-full blur-3xl float-effect"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-memriq-purple/5 rounded-full blur-3xl float-effect" style="animation-delay: -3s;"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+            <!-- Logo mark -->
+            <div class="mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-memriq-cyan/20 to-memriq-purple/20 border border-memriq-border mb-6">
+                    <span class="font-mono text-4xl text-memriq-cyan glow-effect">▲</span>
+                </div>
+            </div>
+            
+            <!-- Main headline -->
+            <h1 class="font-mono font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight mb-6">
+                <span class="block text-memriq-text">MEMRIQ</span>
+                <span class="block gradient-text">AI</span>
+            </h1>
+            
+            <!-- Tagline -->
+            <p class="text-xl md:text-2xl text-memriq-muted font-light max-w-2xl mx-auto mb-4">
+                AI Content Studio
+            </p>
+            <p class="text-lg md:text-xl text-memriq-text font-medium max-w-2xl mx-auto mb-12">
+                Podcasts and educational content on generative AI, RAG, and AI engineering.
+            </p>
+            
+            <!-- CTA buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#podcast" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-memriq-cyan text-memriq-darker font-medium hover:bg-memriq-cyan-dim transition-colors">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 0112.728 0"/>
+                    </svg>
+                    Listen to Podcast
+                </a>
+                <a href="#book" class="inline-flex items-center justify-center px-8 py-4 rounded-lg border border-memriq-border text-memriq-text hover:border-memriq-cyan/50 hover:bg-memriq-cyan/5 transition-all">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    Get the Book
+                </a>
+            </div>
+            
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+                <div class="w-6 h-10 rounded-full border-2 border-memriq-border flex justify-center pt-2">
+                    <div class="w-1.5 h-3 bg-memriq-cyan/50 rounded-full animate-bounce"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Podcast Section -->
+    <section id="podcast" class="py-24 md:py-32 bg-memriq-darker relative">
+        <div class="absolute inset-0 grid-bg opacity-50"></div>
+        
+        <div class="relative max-w-6xl mx-auto px-6">
+            <!-- Section header -->
+            <div class="mb-16">
+                <span class="font-mono text-xs text-memriq-cyan uppercase tracking-widest">// Podcast</span>
+                <h2 class="font-mono font-bold text-3xl md:text-4xl mt-4">The Memriq Inference Brief</h2>
+                <p class="text-memriq-muted mt-4 max-w-xl">
+                    Weekly insights on AI engineering, leadership, and building with generative AI.
+                </p>
+            </div>
+            
+            <!-- Podcast tracks -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Engineering Track -->
+                <div class="bg-memriq-card rounded-2xl border border-memriq-border p-8 card-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-memriq-cyan/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-memriq-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <span class="font-mono text-xs text-memriq-cyan uppercase tracking-wider">Engineering Edition</span>
+                    </div>
+                    
+                    <h3 class="font-semibold text-xl mb-3">Deep Technical Dives</h3>
+                    <p class="text-memriq-muted text-sm leading-relaxed mb-6">
+                        RAG architectures, knowledge graphs, memory systems, agentic workflows, and the technical 
+                        decisions behind building production AI systems.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#RAG</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Agents</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#LLMs</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Memory</span>
+                    </div>
+                    
+                    <!-- Engineering Listen Links -->
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://open.spotify.com/show/1VkrHJnU76GUIWC9UTbigz" target="_blank" rel="noopener" 
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#1DB954]/10 text-[#1DB954] text-xs font-medium hover:bg-[#1DB954]/20 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Spotify
+                        </a>
+                        <a href="https://podcasts.apple.com/no/podcast/the-memriq-ai-inference-brief-engineering-edition/id1859859043" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#D56DFB]/10 text-[#D56DFB] text-xs font-medium hover:bg-[#D56DFB]/20 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+                            </svg>
+                            Apple
+                        </a>
+                        <a href="https://memriq-inference-brief-engineering.captivate.fm/" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-memriq-cyan/10 text-memriq-cyan text-xs font-medium hover:bg-memriq-cyan/20 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                            </svg>
+                            Captivate
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Leadership Track -->
+                <div class="bg-memriq-card rounded-2xl border border-memriq-border p-8 card-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-memriq-purple/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-memriq-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="font-mono text-xs text-memriq-purple uppercase tracking-wider">Leadership Edition</span>
+                    </div>
+                    
+                    <h3 class="font-semibold text-xl mb-3">Strategy & Vision</h3>
+                    <p class="text-memriq-muted text-sm leading-relaxed mb-6">
+                        AI transformation strategies, organizational change, ethics of autonomous systems, 
+                        and building teams for the AI-native future.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#AIStrategy</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Leadership</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Ethics</span>
+                    </div>
+                    
+                    <!-- Leadership Listen Links -->
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://open.spotify.com/show/4Ax7fYsUZ8REZ3KMmKvEhR" target="_blank" rel="noopener" 
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#1DB954]/10 text-[#1DB954] text-xs font-medium hover:bg-[#1DB954]/20 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Spotify
+                        </a>
+                        <a href="https://podcasts.apple.com/us/podcast/the-memriq-ai-inference-brief-leadership-edition/id1859853675" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#D56DFB]/10 text-[#D56DFB] text-xs font-medium hover:bg-[#D56DFB]/20 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+                            </svg>
+                            Apple
+                        </a>
+                        <a href="https://memriq-inference-brief-leadership.captivate.fm/" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-memriq-cyan/10 text-memriq-cyan text-xs font-medium hover:bg-memriq-cyan/20 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                            </svg>
+                            Captivate
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Section -->
+    <section id="book" class="py-24 md:py-32 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <!-- Section header -->
+            <div class="mb-16">
+                <span class="font-mono text-xs text-memriq-cyan uppercase tracking-widest">// Book</span>
+                <h2 class="font-mono font-bold text-3xl md:text-4xl mt-4">Unlocking Data with Generative AI and RAG</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <!-- Book info -->
+                <div class="space-y-6">
+                    <p class="text-lg text-memriq-text leading-relaxed">
+                        The comprehensive guide to building production RAG systems with LangChain, 
+                        vector databases, and modern AI architectures.
+                    </p>
+                    
+                    <div class="bg-memriq-card rounded-xl border border-memriq-border p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="px-3 py-1 bg-memriq-cyan/20 text-memriq-cyan text-xs font-mono rounded-full">2nd Edition</span>
+                            <span class="text-memriq-muted text-sm">January 2025</span>
+                        </div>
+                        
+                        <ul class="space-y-3 text-sm text-memriq-muted">
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Updated for LangChain 1.x compatibility</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Hands-on code labs and practical examples</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Vector databases, embeddings, and retrieval strategies</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Knowledge graphs and hybrid search patterns</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Production deployment and evaluation</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://www.amazon.com/Unlocking-Data-Generative-RAG-LangChain/dp/1835887880" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-memriq-cyan text-memriq-darker font-medium hover:bg-memriq-cyan-dim transition-colors">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            Get on Amazon
+                        </a>
+                        <a href="https://www.packtpub.com/en-us/product/unlocking-data-with-generative-ai-and-rag-9781835887882" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-memriq-border text-memriq-text hover:border-memriq-cyan/50 hover:bg-memriq-cyan/5 transition-all">
+                            Packt Publishing
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Book visual -->
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-memriq-cyan/10 to-memriq-purple/10 rounded-2xl p-8 border border-memriq-border">
+                        <div class="aspect-[3/4] bg-memriq-card rounded-lg border border-memriq-border flex items-center justify-center relative overflow-hidden">
+                            <!-- Decorative elements -->
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-memriq-cyan to-memriq-purple"></div>
+                            <div class="text-center p-6">
+                                <div class="font-mono text-xs text-memriq-cyan mb-4 tracking-widest">PACKT PUBLISHING</div>
+                                <h3 class="font-semibold text-lg md:text-xl mb-2 leading-tight">Unlocking Data with Generative AI and RAG</h3>
+                                <p class="text-sm text-memriq-muted mb-4">Build production-ready AI applications with LangChain and vector databases</p>
+                                <div class="w-16 h-0.5 bg-memriq-border mx-auto mb-4"></div>
+                                <p class="text-sm text-memriq-text font-medium">Keith Bourne</p>
+                                <p class="text-xs text-memriq-muted mt-1">Second Edition</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 md:py-32 bg-memriq-darker relative">
+        <div class="absolute inset-0 grid-bg opacity-50"></div>
+        
+        <div class="relative max-w-6xl mx-auto px-6">
+            <!-- Section header -->
+            <div class="mb-16">
+                <span class="font-mono text-xs text-memriq-cyan uppercase tracking-widest">// About</span>
+                <h2 class="font-mono font-bold text-3xl md:text-4xl mt-4">Keith Bourne</h2>
+            </div>
+            
+            <div class="max-w-3xl">
+                <p class="text-lg text-memriq-text leading-relaxed mb-6">
+                    Staff LLM Data Scientist and founder of Memriq AI. Author of 
+                    <em>Unlocking Data with Generative AI and RAG</em>. Building at the intersection of 
+                    knowledge graphs, memory architectures, and agentic systems.
+                </p>
+                
+                <p class="text-memriq-muted leading-relaxed mb-8">
+                    With deep expertise in RAG systems, vector databases, and production AI deployment, 
+                    I create educational content to help engineers and leaders navigate the rapidly 
+                    evolving AI landscape.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://www.linkedin.com/in/keithpij/" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-memriq-border hover:border-memriq-cyan/50 hover:bg-memriq-cyan/5 transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/kbourne" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-memriq-border hover:border-memriq-cyan/50 hover:bg-memriq-cyan/5 transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-memriq-border">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="font-mono font-bold text-lg">
+                        <span class="text-memriq-cyan">▲</span> MEMRIQ<span class="text-memriq-muted">.AI</span>
+                    </span>
+                </div>
+                
+                <p class="text-sm text-memriq-muted">
+                    © 2025 Memriq AI. All rights reserved.
+                </p>
+                
+                <div class="flex items-center gap-6">
+                    <a href="https://www.linkedin.com/in/keithpij/" target="_blank" rel="noopener" 
+                       class="text-memriq-muted hover:text-memriq-text transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/kbourne" target="_blank" rel="noopener"
+                       class="text-memriq-muted hover:text-memriq-text transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
