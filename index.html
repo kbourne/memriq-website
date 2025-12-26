@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memriq AI — AI Content Studio</title>
-    <meta name="description" content="AI content studio producing podcasts and educational content on generative AI, RAG systems, and AI engineering.">
+    <title>Memriq AI — Your Guide to Making Sense of the AI Boom</title>
+    <meta name="description" content="Weekly AI talk show covering RAG, agents & memory systems. Leadership Edition for execs. Engineering Edition for builders. From the team at Memriq.">
+    <meta property="og:title" content="Memriq AI Inference Brief">
+    <meta property="og:description" content="Weekly AI talk show covering RAG, agents & memory systems. Leadership Edition for execs. Engineering Edition for builders. From the team at Memriq.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,6 +32,7 @@
                             'cyan': '#00d4ff',
                             'cyan-dim': '#00a8cc',
                             'purple': '#8b5cf6',
+                            'accent': '#d63d62',
                             'text': '#e4e4e7',
                             'muted': '#71717a',
                         }
@@ -160,17 +165,13 @@
             </div>
             
             <!-- Main headline -->
-            <h1 class="font-mono font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight mb-6">
-                <span class="block text-memriq-text">MEMRIQ</span>
-                <span class="block gradient-text">AI</span>
+            <h1 class="font-mono font-bold text-3xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+                Your guide to making sense of the <span class="gradient-text">AI boom</span>
             </h1>
             
             <!-- Tagline -->
-            <p class="text-xl md:text-2xl text-memriq-muted font-light max-w-2xl mx-auto mb-4">
-                AI Content Studio
-            </p>
-            <p class="text-lg md:text-xl text-memriq-text font-medium max-w-2xl mx-auto mb-12">
-                Podcasts and educational content on generative AI, RAG, and AI engineering.
+            <p class="text-lg md:text-xl text-memriq-muted font-light max-w-3xl mx-auto mb-12">
+                Podcasts, book-driven deep dives, and practical resources that cut through the AI noise.
             </p>
             
             <!-- CTA buttons -->
@@ -208,7 +209,7 @@
                 <span class="font-mono text-xs text-memriq-cyan uppercase tracking-widest">// Podcast</span>
                 <h2 class="font-mono font-bold text-3xl md:text-4xl mt-4">The Memriq Inference Brief</h2>
                 <p class="text-memriq-muted mt-4 max-w-xl">
-                    Weekly insights on AI engineering, leadership, and building with generative AI.
+                    Weekly AI talk show covering RAG, agents & memory systems. Leadership Edition for execs. Engineering Edition for builders.
                 </p>
             </div>
             
@@ -225,16 +226,16 @@
                         <span class="font-mono text-xs text-memriq-cyan uppercase tracking-wider">Engineering Edition</span>
                     </div>
                     
-                    <h3 class="font-semibold text-xl mb-3">Deep Technical Dives</h3>
+                    <h3 class="font-semibold text-xl mb-3">For Builders</h3>
                     <p class="text-memriq-muted text-sm leading-relaxed mb-6">
-                        RAG architectures, knowledge graphs, memory systems, agentic workflows, and the technical 
-                        decisions behind building production AI systems.
+                        Deep technical dives into RAG architectures, knowledge graphs, agent memory systems, 
+                        and the implementation patterns behind production AI systems.
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
                         <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#RAG</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#GraphRAG</span>
                         <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Agents</span>
-                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#LLMs</span>
                         <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Memory</span>
                     </div>
                     
@@ -275,16 +276,16 @@
                         <span class="font-mono text-xs text-memriq-purple uppercase tracking-wider">Leadership Edition</span>
                     </div>
                     
-                    <h3 class="font-semibold text-xl mb-3">Strategy & Vision</h3>
+                    <h3 class="font-semibold text-xl mb-3">For Executives</h3>
                     <p class="text-memriq-muted text-sm leading-relaxed mb-6">
-                        AI transformation strategies, organizational change, ethics of autonomous systems, 
-                        and building teams for the AI-native future.
+                        Strategic perspectives on AI transformation, organizational change, 
+                        and the mental models leaders need to navigate the AI landscape.
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
                         <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#AIStrategy</span>
                         <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Leadership</span>
-                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Ethics</span>
+                        <span class="px-3 py-1 bg-memriq-border/50 rounded-full text-xs text-memriq-muted">#Transformation</span>
                     </div>
                     
                     <!-- Leadership Listen Links -->
@@ -323,48 +324,52 @@
             <div class="mb-16">
                 <span class="font-mono text-xs text-memriq-cyan uppercase tracking-widest">// Book</span>
                 <h2 class="font-mono font-bold text-3xl md:text-4xl mt-4">Unlocking Data with Generative AI and RAG</h2>
+                <p class="text-memriq-muted mt-4 max-w-2xl">
+                    The companion book to these podcasts. We've built episodes and deep dives around the concepts 
+                    in the book—RAG fundamentals, GraphRAG, agent memory, intelligent recall, and how to ship this stuff responsibly.
+                </p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
                 <!-- Book info -->
                 <div class="space-y-6">
-                    <p class="text-lg text-memriq-text leading-relaxed">
-                        The comprehensive guide to building production RAG systems with LangChain, 
-                        vector databases, and modern AI architectures.
-                    </p>
-                    
                     <div class="bg-memriq-card rounded-xl border border-memriq-border p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="px-3 py-1 bg-memriq-cyan/20 text-memriq-cyan text-xs font-mono rounded-full">2nd Edition</span>
-                            <span class="text-memriq-muted text-sm">January 2025</span>
+                            <span class="text-memriq-muted text-sm">January 2026</span>
                         </div>
+                        
+                        <p class="text-memriq-text mb-6 leading-relaxed">
+                            <strong class="text-memriq-cyan">If you want a clear path from "I keep hearing about RAG/agents" to 
+                            "I can explain it, design it, and evaluate it," you're in the right place.</strong>
+                        </p>
                         
                         <ul class="space-y-3 text-sm text-memriq-muted">
                             <li class="flex items-start gap-3">
                                 <span class="text-memriq-cyan mt-0.5">→</span>
-                                <span>Updated for LangChain 1.x compatibility</span>
+                                <span>RAG fundamentals and advanced patterns</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="text-memriq-cyan mt-0.5">→</span>
-                                <span>Hands-on code labs and practical examples</span>
+                                <span>GraphRAG and knowledge graph integration</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="text-memriq-cyan mt-0.5">→</span>
-                                <span>Vector databases, embeddings, and retrieval strategies</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-memriq-cyan mt-0.5">→</span>
-                                <span>Knowledge graphs and hybrid search patterns</span>
+                                <span>Agent memory and intelligent recall</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="text-memriq-cyan mt-0.5">→</span>
                                 <span>Production deployment and evaluation</span>
                             </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-memriq-cyan mt-0.5">→</span>
+                                <span>Responsible AI shipping practices</span>
+                            </li>
                         </ul>
                     </div>
                     
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://www.amazon.com/Unlocking-Data-Generative-RAG-LangChain/dp/1835887880" target="_blank" rel="noopener"
+                        <a href="https://a.co/d/4h3kgub" target="_blank" rel="noopener"
                            class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-memriq-cyan text-memriq-darker font-medium hover:bg-memriq-cyan-dim transition-colors">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -412,15 +417,18 @@
             
             <div class="max-w-3xl">
                 <p class="text-lg text-memriq-text leading-relaxed mb-6">
-                    Staff LLM Data Scientist and founder of Memriq AI. Author of 
-                    <em>Unlocking Data with Generative AI and RAG</em>. Building at the intersection of 
-                    knowledge graphs, memory architectures, and agentic systems.
+                    Staff LLM Data Scientist at <a href="https://magnifi.com" target="_blank" rel="noopener" class="text-memriq-cyan hover:underline">Magnifi by TIFIN</a>, 
+                    founder of Memriq AI, and host of The Memriq Inference Brief.
+                </p>
+                
+                <p class="text-memriq-muted leading-relaxed mb-6">
+                    Memriq AI is a learning hub for people trying to keep up with a fast-moving AI world—without 
+                    drowning in hype. We turn big ideas into usable mental models and implementation patterns.
                 </p>
                 
                 <p class="text-memriq-muted leading-relaxed mb-8">
-                    With deep expertise in RAG systems, vector databases, and production AI deployment, 
-                    I create educational content to help engineers and leaders navigate the rapidly 
-                    evolving AI landscape.
+                    Author of <em>Unlocking Data with Generative AI and RAG</em> (Packt, 2nd Edition). 
+                    Building at the intersection of knowledge graphs, memory architectures, and agentic systems.
                 </p>
                 
                 <div class="flex flex-wrap gap-4">
