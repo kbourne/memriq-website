@@ -387,3 +387,11 @@ body {
 .section { padding: 96px 24px; }
 .section-sm { padding: 64px 24px; }
 .inner { max-width: 1120px; margin: 0 auto; }
+
+/* ---------- CAO portrait ---------- */
+.cao-portrait {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+}
