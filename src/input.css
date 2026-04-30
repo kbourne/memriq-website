@@ -395,3 +395,47 @@ body {
   height: auto;
   display: block;
 }
+
+/* ---------- Brand mark (nav + footer) ---------- */
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ---------- Hero mark badge ---------- */
+.hero-mark {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 32px;
+  position: relative;
+}
+.hero-mark img {
+  width: 96px;
+  height: 96px;
+  position: relative;
+  z-index: 2;
+}
+.hero-mark::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.18) 0%,
+    rgba(34, 211, 238, 0) 70%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .hero-mark img { width: 72px; height: 72px; }
+  .hero-mark::before { width: 150px; height: 150px; left: 36px; }
+  .hero-mark { margin-bottom: 24px; }
+}
