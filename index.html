@@ -27,7 +27,6 @@
       </a>
       <div class="nav-links" style="display:flex;align-items:center;gap:4px;">
         <a href="./portfolio.html" style="padding:6px 12px;border-radius:5px;font-size:13px;color:var(--fg-muted);text-decoration:none;transition:color 180ms;">Portfolio</a>
-        <a href="./platform.html" style="padding:6px 12px;border-radius:5px;font-size:13px;color:var(--fg-muted);text-decoration:none;transition:color 180ms;">Platform</a>
         <a href="#content" style="padding:6px 12px;border-radius:5px;font-size:13px;color:var(--fg-muted);text-decoration:none;transition:color 180ms;">Content</a>
         <a href="./team.html" style="padding:6px 12px;border-radius:5px;font-size:13px;color:var(--fg-muted);text-decoration:none;transition:color 180ms;">Team</a>
         <a href="https://labs.memriq.ai" target="_blank" rel="noopener" style="padding:6px 12px;border-radius:5px;font-size:13px;color:var(--fg-muted);text-decoration:none;display:flex;align-items:center;gap:4px;">Labs <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
@@ -40,7 +39,6 @@
   <div id="mobile-menu" style="display:none;position:fixed;top:52px;left:0;right:0;z-index:40;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:16px 24px;">
     <div style="display:flex;flex-direction:column;gap:4px;">
       <a href="./portfolio.html" style="padding:10px 12px;border-radius:5px;font-size:14px;color:var(--fg-muted);text-decoration:none;">Portfolio</a>
-      <a href="./platform.html" style="padding:10px 12px;border-radius:5px;font-size:14px;color:var(--fg-muted);text-decoration:none;">Platform</a>
       <a href="#content" style="padding:10px 12px;border-radius:5px;font-size:14px;color:var(--fg-muted);text-decoration:none;">Content</a>
       <a href="./team.html" style="padding:10px 12px;border-radius:5px;font-size:14px;color:var(--fg-muted);text-decoration:none;">Team</a>
       <a href="https://labs.memriq.ai" target="_blank" rel="noopener" style="padding:10px 12px;border-radius:5px;font-size:14px;color:var(--fg-muted);text-decoration:none;">Labs ↗</a>
@@ -65,7 +63,7 @@
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;">
         <a href="./portfolio.html" class="btn-primary">Explore the portfolio →</a>
-        <a href="./platform.html" class="btn-secondary">How the platform works</a>
+        <a href="#operating" class="btn-secondary">How the conglomerate runs</a>
       </div>
     </div>
   </section>
@@ -105,45 +103,6 @@
           <p style="font-size:14px;line-height:1.65;color:var(--fg-2);margin:0;">Every agent has measurable objectives, three types of memory — semantic, episodic, procedural — and Bayesian confidence in its own outputs. Agents hedge when uncertain and escalate when stuck.</p>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- PLATFORM TEASER -->
-  <section class="section" style="border-top:1px solid var(--border);">
-    <div class="inner">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
-        <div>
-          <div class="eyebrow" style="margin-bottom:16px;">// THE MEMORY PLATFORM</div>
-          <h2 class="display" style="font-size:clamp(26px,3vw,36px);margin:0 0 20px;">Compounding intelligence is the differentiator.</h2>
-          <p style="font-size:15px;line-height:1.65;color:var(--fg-2);margin:0 0 16px;">Most AI tools start fresh every session. Memriq agents don't. Built on CoALA-based memory (semantic + episodic + procedural), a Bayesian belief-state layer, six-level scoping, and a hybrid retrieval stack over a Neo4j knowledge graph — every decision is traceable and every successful episode becomes reusable procedure.</p>
-          <p style="font-size:15px;line-height:1.65;color:var(--fg-2);margin:0 0 32px;">This is the core IP. Everything Memriq builds runs on it.</p>
-          <a href="./platform.html" class="btn-secondary">See the architecture →</a>
-        </div>
-        <!-- Mini system diagram -->
-        <div>
-          <div style="border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:24px;box-shadow:var(--shadow-sm);">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;gap:10px;">
-                <img src="./assets/motifs/node.svg" alt="" style="width:10px;opacity:0.5;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);">Application agents (×18)</span>
-              </div>
-              <div style="padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:5px;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);">Belief state · Goal management</span>
-              </div>
-              <div style="padding:10px 14px;background:#22D3EE08;border:1px solid #22D3EE22;border-radius:5px;display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--cyan-400);">Memory — Semantic / Episodic / Procedural</span>
-              </div>
-              <div style="padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:5px;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);">Hybrid retrieval — Vector · BM25 · Graph · RRF</span>
-              </div>
-              <div style="padding:10px 14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;gap:8px;">
-                <img src="./assets/motifs/edge.svg" alt="" style="width:14px;opacity:0.4;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--fg-subtle);">Neo4j knowledge graph backbone</span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -277,7 +236,7 @@
             <li style="display:flex;gap:8px;font-size:13px;color:var(--fg-muted);"><span style="color:var(--cyan-400);flex-shrink:0;">→</span>Build semantic caches to improve response speed and reduce hallucinations</li>
             <li style="display:flex;gap:8px;font-size:13px;color:var(--fg-muted);"><span style="color:var(--cyan-400);flex-shrink:0;">→</span>Code memory pipelines for working, episodic, semantic, and procedural recall</li>
             <li style="display:flex;gap:8px;font-size:13px;color:var(--fg-muted);"><span style="color:var(--cyan-400);flex-shrink:0;">→</span>Implement agentic learning using LangMem and prompt optimization strategies</li>
-            <li style="display:flex;gap:8px;font-size:13px;color:var(--fg-muted);"><span style="color:var(--cyan-400);flex-shrink:0;">→</span>Use Neo4j, LangChain, and vector databases in production-ready RAG pipelines</li>
+            <li style="display:flex;gap:8px;font-size:13px;color:var(--fg-muted);"><span style="color:var(--cyan-400);flex-shrink:0;">→</span>Use knowledge graph, LangChain, and vector databases in production-ready RAG pipelines</li>
           </ul>
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
             <a href="https://a.co/d/8ZGomoJ" target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:6px 14px;">Amazon →</a>
