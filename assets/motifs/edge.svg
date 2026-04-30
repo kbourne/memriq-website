@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 8" fill="none" preserveAspectRatio="none">
+  
+  <defs>
+    <linearGradient id="mq-edge" x1="0" y1="4" x2="120" y2="4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B14BFF"></stop>
+      <stop offset="1" stop-color="#22D3EE"></stop>
+    </linearGradient>
+  </defs>
+  <line x1="4" y1="4" x2="116" y2="4" stroke="url(#mq-edge)" stroke-width="1.5" stroke-linecap="round"></line>
+  <circle cx="4" cy="4" r="3" fill="#B14BFF"></circle>
+  <circle cx="116" cy="4" r="3" fill="#22D3EE"></circle>
+</svg>

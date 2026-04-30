@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" preserveAspectRatio="xMidYMid slice">
+  
+  <defs>
+    <linearGradient id="mq-mpath" x1="40" y1="260" x2="360" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B14BFF" stop-opacity="0.55"></stop>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.55"></stop>
+    </linearGradient>
+    <radialGradient id="mq-hero-glow" cx="200" cy="150" r="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.08"></stop>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="300" fill="#0A0A12"></rect>
+  <rect width="400" height="300" fill="url(#mq-hero-glow)"></rect>
+
+  
+  <g opacity="0.22" fill="#F5F5FA">
+    <circle cx="60" cy="60" r="1.1"></circle>
+    <circle cx="120" cy="40" r="0.9"></circle>
+    <circle cx="350" cy="80" r="1.2"></circle>
+    <circle cx="320" cy="240" r="1.0"></circle>
+    <circle cx="80" cy="240" r="1.1"></circle>
+    <circle cx="200" cy="30" r="0.8"></circle>
+    <circle cx="260" cy="60" r="0.9"></circle>
+    <circle cx="40" cy="170" r="1.0"></circle>
+    <circle cx="380" cy="190" r="0.9"></circle>
+  </g>
+
+  
+  <path d="M60 230 L140 90 L200 175 L260 90 L340 230" stroke="url(#mq-mpath)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+
+  
+  <g opacity="0.9">
+    <circle cx="60" cy="230" r="3.2" fill="#22D3EE"></circle>
+    <circle cx="140" cy="90" r="3.2" fill="#7C3AED"></circle>
+    <circle cx="200" cy="175" r="3.2" fill="#B14BFF"></circle>
+    <circle cx="260" cy="90" r="3.2" fill="#7C3AED"></circle>
+    <circle cx="340" cy="230" r="3.2" fill="#22D3EE"></circle>
+  </g>
+</svg>

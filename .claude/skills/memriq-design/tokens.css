@@ -1,0 +1,409 @@
+/* ============================================================
+   Memriq Design System — Core Tokens
+   Dark-mode native, light-mode parity. Load this once at root.
+   ============================================================ */
+
+/* ---------- Webfonts ----------
+   Geist is self-hosted (variable TTF in ./fonts/).
+   JetBrains Mono still comes from Google Fonts — upload the file to
+   ./fonts/ if you want to fully self-host. ------------------------ */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/Geist-VariableFont_wght.ttf') format('truetype-variations'),
+       url('./fonts/Geist-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('./fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype-variations'),
+       url('./fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: italic;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('./fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype-variations'),
+       url('./fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+:root {
+  /* ---------- Core palette: raw brand hues ---------- */
+
+  /* Cyan — primary action, focus rings, live states */
+  --cyan-50:  #ECFEFF;
+  --cyan-100: #CFFAFE;
+  --cyan-200: #A5F3FC;
+  --cyan-300: #67E8F9;
+  --cyan-400: #22D3EE;  /* brand primary */
+  --cyan-500: #06B6D4;
+  --cyan-600: #0891B2;
+  --cyan-700: #0E7490;
+  --cyan-800: #155E75;
+  --cyan-900: #164E63;
+  --cyan-950: #083344;
+
+  /* Violet — secondary, agent/AI chrome */
+  --violet-50:  #F5F3FF;
+  --violet-100: #EDE9FE;
+  --violet-200: #DDD6FE;
+  --violet-300: #C4B5FD;
+  --violet-400: #A78BFA;
+  --violet-500: #8B5CF6;
+  --violet-600: #7C3AED;  /* brand secondary */
+  --violet-700: #6D28D9;
+  --violet-800: #5B21B6;
+  --violet-900: #4C1D95;
+  --violet-950: #2E1065;
+
+  /* Magenta — gradient partner for cyan; reserved use */
+  --magenta-50:  #FDF4FF;
+  --magenta-100: #FAE8FF;
+  --magenta-200: #F5D0FE;
+  --magenta-300: #EAB2FE;
+  --magenta-400: #D879FE;
+  --magenta-500: #C44BFE;
+  --magenta-600: #B14BFF;  /* brand accent */
+  --magenta-700: #9333EA;
+  --magenta-800: #7A1FC2;
+  --magenta-900: #581C87;
+  --magenta-950: #3B0764;
+
+  /* Neutral — engineered cool-gray with a ~240° hue to pair with cyan */
+  --neutral-50:  #F5F5FA;  /* text primary */
+  --neutral-100: #E4E4EC;
+  --neutral-200: #C9C9D6;
+  --neutral-300: #A8A8BB;
+  --neutral-400: #9CA3B8;  /* text muted */
+  --neutral-500: #6B6F85;
+  --neutral-600: #4A4E63;
+  --neutral-700: #2F3245;
+  --neutral-800: #1F1F2E;  /* border */
+  --neutral-900: #13131C;  /* surface */
+  --neutral-950: #0A0A12;  /* background */
+
+  /* ---------- Semantic color tokens (DARK — default) ---------- */
+  --bg:           var(--neutral-950);  /* #0A0A12 */
+  --bg-elevated: #0D0D16;              /* between bg and surface */
+  --surface:      var(--neutral-900);  /* #13131C */
+  --surface-2:    #181824;             /* menus, popovers */
+  --surface-3:    #1C1C2A;             /* hover on surface */
+  --border:       var(--neutral-800);  /* #1F1F2E */
+  --border-strong:#2A2A3D;
+  --border-subtle:#17172310;
+
+  --fg:           var(--neutral-50);   /* #F5F5FA */
+  --fg-2:         #D4D4DE;             /* secondary body */
+  --fg-muted:     var(--neutral-400);  /* #9CA3B8 */
+  --fg-subtle:    #6B6F85;             /* placeholders, timestamps */
+  --fg-disabled:  #3F4256;
+  --fg-on-accent: #06121A;             /* text on cyan fills */
+
+  --primary:       var(--cyan-400);
+  --primary-hover: var(--cyan-300);
+  --primary-press: var(--cyan-500);
+  --primary-muted: #22D3EE22;          /* tinted backgrounds */
+
+  --secondary:       var(--violet-600);
+  --secondary-hover: var(--violet-500);
+  --accent:          var(--magenta-600);
+
+  /* Semantic status — dark-tuned */
+  --success:      #10B981;
+  --success-bg:   #10B98118;
+  --success-fg:   #34D399;
+  --warning:      #F59E0B;
+  --warning-bg:   #F59E0B18;
+  --warning-fg:   #FBBF24;
+  --error:        #F43F5E;
+  --error-bg:     #F43F5E1A;
+  --error-fg:     #FB7185;
+  --info:         var(--cyan-400);
+  --info-bg:      #22D3EE1A;
+  --info-fg:      var(--cyan-300);
+
+  /* Agent-domain colors */
+  --agent-active:    var(--cyan-400);     /* agent is running */
+  --agent-waiting:   var(--neutral-400);  /* idle */
+  --agent-escalate:  var(--warning);      /* needs human */
+  --agent-blocked:   var(--error);
+
+  /* ---------- Signature gradients (reserved: logo, hero, CTAs) ---------- */
+  --gradient-brand: linear-gradient(135deg, #B14BFF 0%, #22D3EE 100%);
+  --gradient-brand-soft: linear-gradient(135deg, #B14BFF33 0%, #22D3EE33 100%);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, #22D3EE1A 0%, transparent 60%),
+                   radial-gradient(ellipse 60% 50% at 80% 20%, #B14BFF18 0%, transparent 60%);
+  --gradient-border: linear-gradient(135deg, #B14BFF 0%, #22D3EE 100%);
+
+  /* ---------- Typography ---------- */
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: var(--font-sans);  /* Geist handles display too */
+
+  /* Type scale (1.125 minor third, tightened at large end for display) */
+  --text-2xs:  11px;  /* timestamps, badges */
+  --text-xs:   12px;  /* dense tables, log lines */
+  --text-sm:   13px;  /* body compact / UI default */
+  --text-base: 14px;  /* body */
+  --text-md:   15px;  /* prose */
+  --text-lg:   17px;  /* card titles */
+  --text-xl:   20px;  /* section headers */
+  --text-2xl:  24px;  /* page titles */
+  --text-3xl:  30px;  /* subhero */
+  --text-4xl:  40px;  /* hero */
+  --text-5xl:  56px;  /* display */
+  --text-6xl:  72px;  /* marketing display */
+
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  --tracking-tight:  -0.02em;
+  --tracking-snug:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-mono:   -0.01em;  /* JetBrains Mono benefits from a hair less */
+
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-0:    0;
+  --space-px:   1px;
+  --space-0-5:  2px;
+  --space-1:    4px;
+  --space-1-5:  6px;
+  --space-2:    8px;
+  --space-2-5: 10px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+
+  /* ---------- Radius ---------- */
+  --radius-xs:  3px;    /* chips, pills in dense UI */
+  --radius-sm:  5px;    /* inputs, buttons, rows */
+  --radius-md:  8px;    /* cards, panels */
+  --radius-lg:  12px;   /* modals, large cards */
+  --radius-xl:  16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ---------- Elevation (dark-first; shadows are subtle + crisp) ---------- */
+  --shadow-xs: 0 1px 0 0 rgba(0,0,0,0.4);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02) inset;
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;
+
+  /* Glow — sparingly; primary CTA hover, focus rings, live indicators */
+  --glow-cyan:    0 0 0 1px #22D3EE40, 0 0 24px #22D3EE33;
+  --glow-violet:  0 0 0 1px #7C3AED40, 0 0 24px #7C3AED33;
+  --glow-brand:   0 0 24px #B14BFF20, 0 0 48px #22D3EE15;
+
+  /* ---------- Focus ring ---------- */
+  --ring:       0 0 0 2px var(--bg), 0 0 0 4px var(--cyan-400);
+  --ring-error: 0 0 0 2px var(--bg), 0 0 0 4px var(--error);
+
+  /* ---------- Motion ---------- */
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    120ms;
+  --dur-base:    180ms;
+  --dur-slow:    280ms;
+
+  /* ---------- Layout ---------- */
+  --container-sm:  640px;
+  --container-md:  800px;
+  --container-lg: 1120px;
+  --container-xl: 1400px;
+  --sidebar-w:    240px;
+  --navbar-h:      52px;
+}
+
+/* ---------- Light mode parity (opt-in via .light or media query) ---------- */
+@media (prefers-color-scheme: light) {
+  :root.auto {
+    --bg:           #FAFAFB;
+    --bg-elevated:  #FFFFFF;
+    --surface:      #FFFFFF;
+    --surface-2:    #F5F5F8;
+    --surface-3:    #EFEFF3;
+    --border:       #E4E4EC;
+    --border-strong:#CDCDD7;
+    --border-subtle:#00000008;
+
+    --fg:           #0A0A12;
+    --fg-2:         #1F1F2E;
+    --fg-muted:     #5A5E72;
+    --fg-subtle:    #8B8FA3;
+    --fg-disabled:  #C9C9D6;
+    --fg-on-accent: #FFFFFF;
+
+    --primary:       var(--cyan-600);
+    --primary-hover: var(--cyan-700);
+    --primary-press: var(--cyan-800);
+    --primary-muted: #06B6D414;
+
+    --shadow-sm: 0 1px 2px rgba(10,10,18,0.06), 0 0 0 1px rgba(10,10,18,0.04);
+    --shadow-md: 0 4px 12px rgba(10,10,18,0.08), 0 0 0 1px rgba(10,10,18,0.05);
+    --shadow-lg: 0 12px 32px rgba(10,10,18,0.10), 0 0 0 1px rgba(10,10,18,0.06);
+  }
+}
+
+:root.light {
+  --bg:           #FAFAFB;
+  --bg-elevated:  #FFFFFF;
+  --surface:      #FFFFFF;
+  --surface-2:    #F5F5F8;
+  --surface-3:    #EFEFF3;
+  --border:       #E4E4EC;
+  --border-strong:#CDCDD7;
+  --fg:           #0A0A12;
+  --fg-2:         #1F1F2E;
+  --fg-muted:     #5A5E72;
+  --fg-subtle:    #8B8FA3;
+  --primary:       var(--cyan-600);
+  --primary-hover: var(--cyan-700);
+}
+
+/* ============================================================
+   Semantic type roles — use these, not raw sizes
+   ============================================================ */
+
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.t-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.t-h2 {
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.t-h3 {
+  font-size: var(--text-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.t-h4 {
+  font-size: var(--text-lg);
+  line-height: var(--lh-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.t-body {
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+
+.t-body-sm {
+  font-size: var(--text-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+
+.t-muted {
+  color: var(--fg-muted);
+}
+
+.t-eyebrow {
+  font-size: var(--text-xs);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-medium);
+  color: var(--fg-muted);
+}
+
+.t-code,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-mono);
+}
+
+.t-log {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  letter-spacing: var(--tracking-mono);
+  color: var(--fg-2);
+}
+
+.t-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.t-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ============================================================
+   Base reset — minimal, opinionated
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--cyan-400); color: var(--fg-on-accent); }
+
+/* Scrollbar — thin, unobtrusive */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+*::-webkit-scrollbar-thumb:hover { background: var(--neutral-600); background-clip: padding-box; border: 2px solid transparent; }
