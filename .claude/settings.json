@@ -6,7 +6,12 @@
       "Bash(git commit -m ' *)",
       "Bash(git add *)",
       "Bash(git push *)",
-      "Read(//Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/**)"
+      "Read(//Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/**)",
+      "Bash(cp /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_forseti.yaml /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_svarog.yaml)",
+      "Bash(rm /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_forseti.yaml)"
+    ],
+    "additionalDirectories": [
+      "/Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents"
     ]
   }
 }
