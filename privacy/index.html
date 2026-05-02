@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Memriq</title>
+    <meta name="description" content="Privacy policy for Memriq AI products and services.">
+    <meta property="og:title" content="Privacy Policy — Memriq">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'memriq': {
+                            'dark': '#0a0a0f',
+                            'darker': '#050508',
+                            'card': '#12121a',
+                            'border': '#1e1e2e',
+                            'cyan': '#00d4ff',
+                            'cyan-dim': '#00a8cc',
+                            'purple': '#8b5cf6',
+                            'accent': '#d63d62',
+                            'text': '#e4e4e7',
+                            'muted': '#71717a',
+                        }
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Outfit', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0a0a0f; color: #e4e4e7; font-family: 'Outfit', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h1 { font-size: 2.25rem; font-weight: 600; margin-bottom: 1.5rem; }
+        h2 { font-size: 1.5rem; font-weight: 500; margin-top: 2.5rem; margin-bottom: 1rem; color: #00d4ff; }
+        p, li { color: #d4d4d8; line-height: 1.75; margin-bottom: 1rem; }
+        ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        a { color: #00d4ff; text-decoration: underline; }
+        a:hover { color: #8b5cf6; }
+        .meta { color: #71717a; font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+    <header class="border-b border-memriq-border">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3">
+                <span class="text-2xl font-mono font-bold gradient-text">Memriq</span>
+            </a>
+            <nav class="text-sm text-memriq-muted space-x-6">
+                <a href="/" class="hover:text-memriq-text">Home</a>
+                <a href="/privacy" class="hover:text-memriq-text">Privacy</a>
+                <a href="/terms" class="hover:text-memriq-text">Terms</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 py-16">
+        <h1>Privacy Policy</h1>
+        <p class="meta"><strong>Last updated:</strong> May 2026</p>
+
+        <h2>About this policy</h2>
+        <p>
+            This policy covers how Memriq, Inc. ("Memriq", "we") collects and uses
+            information from users of Memriq products and services, including (but
+            not limited to) the public website at memriq.ai, the Memriq newsletter,
+            and invite-only applications such as Topsway, Braid, Command, Counsel,
+            Vault, and the Claude Certified Architect Trainer.
+        </p>
+
+        <h2>What we collect</h2>
+        <ul>
+            <li><strong>Account data:</strong> when you sign in to a Memriq application with Google, we receive your email address and display name.</li>
+            <li><strong>Usage data:</strong> activity within an application (study attempts, feature usage, agent conversations, file uploads). The specific data depends on which Memriq product you use.</li>
+            <li><strong>Operational logs:</strong> standard server logs (timestamps, request paths, response codes) for diagnostics and security.</li>
+            <li><strong>Newsletter data:</strong> if you subscribe, your email address and any preferences you set.</li>
+        </ul>
+
+        <h2>How we use it</h2>
+        <p>
+            We use your data to operate the Memriq product you signed up for, to
+            personalize that product to you (e.g., scoring, recommendations, agent
+            grounding), and to communicate with you about the service. We do not sell
+            your data and we do not share it with third parties for advertising.
+        </p>
+
+        <h2>Where it lives</h2>
+        <p>
+            Memriq applications run on infrastructure operated by Memriq in the
+            United States, primarily Railway (compute), Neo4j Aura (graph data),
+            MongoDB Atlas (document/event data), and Resend (transactional email).
+            Sign-in is brokered by Google. LLM completions are processed by OpenAI
+            and/or Anthropic; we transmit only the necessary context and prompts
+            required by each product.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>
+            Memriq applications use first-party session cookies issued by NextAuth
+            (or equivalent) to keep you signed in. The public memriq.ai marketing
+            site uses no third-party tracking cookies.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>
+            You can request access to or deletion of your account data by emailing
+            <a href="mailto:keith@memriq.com">keith@memriq.com</a>. We will confirm
+            within seven days. If you are subscribed to a Memriq newsletter, every
+            edition includes a one-click unsubscribe link.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+            Memriq products are not directed to children under 13 and we do not
+            knowingly collect data from them.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+            Material changes to this policy will be communicated to active users by
+            email at least seven days before they take effect, and the "Last updated"
+            date above will be revised.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+            Questions or requests:
+            <a href="mailto:keith@memriq.com">keith@memriq.com</a>
+        </p>
+    </main>
+
+    <footer class="border-t border-memriq-border mt-16">
+        <div class="max-w-5xl mx-auto px-6 py-8 text-sm text-memriq-muted flex items-center justify-between">
+            <span>© 2026 Memriq, Inc.</span>
+            <span><a href="/terms" class="hover:text-memriq-text">Terms</a> · <a href="/privacy" class="hover:text-memriq-text">Privacy</a></span>
+        </div>
+    </footer>
+</body>
+</html>
