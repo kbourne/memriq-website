@@ -11,7 +11,8 @@
       "Bash(rm /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_forseti.yaml)"
     ],
     "additionalDirectories": [
-      "/Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents"
+      "/Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents",
+      "/Users/keithbourne/development/agentic/memriq-holdings/packages/companies/_shared/plans/dev"
     ]
   }
 }
