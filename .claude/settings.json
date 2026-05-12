@@ -9,7 +9,8 @@
       "Read(//Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/**)",
       "Bash(cp /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_forseti.yaml /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_svarog.yaml)",
       "Bash(rm /Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents/aegis_constraints_forseti.yaml)",
-      "WebFetch(domain:cca.memriq.ai)"
+      "WebFetch(domain:cca.memriq.ai)",
+      "WebFetch(domain:todo.memriq.ai)"
     ],
     "additionalDirectories": [
       "/Users/keithbourne/development/agentic/memriq-holdings/config/goals/agents",
