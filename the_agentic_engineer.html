@@ -557,6 +557,46 @@
     letter-spacing: -0.01em;
     margin-bottom: 4px;
   }
+
+  /* Links — inherit color, underline in accent */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+  a:hover { text-decoration-thickness: 2px; }
+
+  /* Corner video overlay (persistent) */
+  #corner-video {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 320px;
+    height: 180px;
+    z-index: 9999;
+    border: 1px solid rgba(31, 90, 100, 0.6);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+    background: #000;
+  }
+  #corner-video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Memriq mark on slide 11 */
+  .s-experiment .mark {
+    position: absolute;
+    top: 96px;
+    right: 140px;
+    width: 72px;
+    height: 72px;
+    opacity: 0.85;
+  }
 </style>
 </head>
 <body>
@@ -583,9 +623,9 @@
     <div class="eyebrow">01 — Hello</div>
     <h2 class="title">A quick orientation.</h2>
     <ul class="vlist huge">
-      <li>Forward Deployed AI Engineer at <em class="accent">Tribe AI</em>.</li>
+      <li>Forward Deployed AI Engineer at <em class="accent"><a href="https://www.tribe.ai/" target="_blank" rel="noopener">Tribe AI</a></em>.</li>
       <li>Previously: multi-agent platform at TIFIN; GenAI infrastructure at Johnson &amp; Johnson.</li>
-      <li>Author, <em class="accent">Unlocking Data with Generative AI and RAG</em> — Packt, 2 editions, top-10 Amazon AI.</li>
+      <li>Author, <em class="accent"><a href="https://a.co/d/5098QF7" target="_blank" rel="noopener">Unlocking Data with Generative AI and RAG</a></em> — Packt, 2 editions, top-10 Amazon AI.</li>
       <li>MADS '22 · MBA, Babson · 15+ years shipping production AI/ML.</li>
     </ul>
     <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">02 / 12</span></div>
@@ -718,7 +758,7 @@
     <div class="s7-grid">
       <div>
         <div class="video-placeholder">
-          <div class="vp-label">Overlay video here · Cowork → Claude Code</div>
+          <iframe src="https://www.loom.com/embed/9f8af626ded245c78a75331e62cb2403?autoplay=1&muted=1&hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true&t=60" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
         <div class="video-caption">
           <strong>Cowork (left)</strong> orchestrates from a PRD I built in ~1 hour beforehand — generating prompts I paste into <strong>Claude Code (right)</strong>. Includes the audit prompts.
@@ -792,21 +832,30 @@
       <li>Problem decomposition — the precondition for writing PRDs agents can execute.</li>
     </ul>
     <div class="callout">
-      And you still need a strong technical background — <strong>you can't course-correct an agent if you don't know what right looks like.</strong> That's what MADS gave you.
+      The technical foundations matter — but the deeper value is that <strong>MADS taught you to think and work like a data scientist.</strong> It's why my code ships cleaner. Why my decisions are data-driven. Why I frame problems differently than engineering-only colleagues. The way of thinking is what compounds — and it's the thing agents can't replicate.
     </div>
     <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">10 / 12</span></div>
   </section>
 
   <!-- ─── SLIDE 11 — WHERE THIS IS HEADING ─── -->
   <section data-screen-label="11 Where this is heading" class="s-experiment">
+    <svg class="mark" viewBox="0 0 64 64" fill="none" aria-label="Memriq">
+      <path d="M14 44 C 22 12, 42 12, 50 44" stroke="#1f5a64" stroke-width="1.6" opacity="0.35" fill="none"></path>
+      <path d="M14 44 L24 22 L32 38 L40 22 L50 44" stroke="#1f5a64" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+      <circle cx="14" cy="44" r="3" fill="#1f5a64"></circle>
+      <circle cx="24" cy="22" r="3" fill="#1f5a64"></circle>
+      <circle cx="32" cy="38" r="3" fill="#1f5a64"></circle>
+      <circle cx="40" cy="22" r="3" fill="#1f5a64"></circle>
+      <circle cx="50" cy="44" r="3" fill="#1f5a64"></circle>
+    </svg>
     <div class="eyebrow">10 — The experiment</div>
     <h2 class="title">I don't know where this is going.<br>I'm running an experiment to find out.</h2>
     <ul class="vlist">
-      <li><span class="lead">Memriq.ai — my thought experiment.</span> What if you pushed to the limit and built a company with only agents? Not a prediction. A way to learn what's possible.</li>
+      <li><span class="lead"><a href="https://memriq.ai/" target="_blank" rel="noopener">Memriq.ai</a> — my thought experiment.</span> What if you pushed to the limit and built a company with only agents? Not a prediction. A way to learn what's possible.</li>
       <li><span class="lead">My actual belief: push humans up the value equation.</span> Less typing, less repetition. More judgment, taste, design, framing.</li>
       <li><span class="lead">The point isn't replacement.</span> It's about humans operating at the top of their stack.</li>
     </ul>
-    <div class="podfoot"><span class="tag">Podcast</span><em>Agentification of enterprises = Kaizen for the AI era.</em></div>
+    <div class="podfoot"><span class="tag">Podcast</span><a href="https://memriq-inference-brief-leadership.captivate.fm/episode/agentification-enterprises-kaizen-ai" target="_blank" rel="noopener"><em>Agentification of enterprises = Kaizen for the AI era.</em></a></div>
     <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">11 / 12</span></div>
   </section>
 
@@ -823,10 +872,12 @@
     </div>
 
     <div class="contact">
-      <div class="row"><span class="k">Demo</span><span class="v">loom.com/share/9f8af626ded245c78a75331e62cb2403</span></div>
-      <div class="row"><span class="k">Memriq</span><span class="v">memriq.ai</span></div>
-      <div class="row"><span class="k">Book</span><span class="v">Unlocking Data with Generative AI and RAG · Packt</span></div>
-      <div class="row"><span class="k">Email</span><span class="v">bourne&#64;umich.edu</span></div>
+      <div class="row"><span class="k">Demo</span><span class="v"><a href="https://www.loom.com/share/9f8af626ded245c78a75331e62cb2403" target="_blank" rel="noopener">loom.com/share/9f8af626…</a></span></div>
+      <div class="row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/keithbourne/" target="_blank" rel="noopener">linkedin.com/in/keithbourne</a></span></div>
+      <div class="row"><span class="k">Memriq</span><span class="v"><a href="https://memriq.ai/" target="_blank" rel="noopener">memriq.ai</a></span></div>
+      <div class="row"><span class="k">Podcast</span><span class="v"><a href="https://memriq-inference-brief-leadership.captivate.fm/" target="_blank" rel="noopener">memriq-inference-brief.captivate.fm</a></span></div>
+      <div class="row"><span class="k">Book</span><span class="v"><a href="https://a.co/d/5098QF7" target="_blank" rel="noopener">Unlocking Data with Generative AI and RAG · Packt</a></span></div>
+      <div class="row"><span class="k">Email</span><span class="v"><a href="mailto:bourne@umich.edu">bourne&#64;umich.edu</a></span></div>
     </div>
     <div class="footer" style="border-top:none;"><span class="left">Thank you.</span><span class="right">12 / 12</span></div>
   </section>
@@ -888,6 +939,11 @@
     show(start);
   })();
 </script>
+
+<!-- Persistent corner video overlay (shown on every slide) -->
+<div id="corner-video">
+  <iframe src="https://www.loom.com/embed/9f8af626ded245c78a75331e62cb2403?autoplay=1&muted=1&hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true&t=60" allow="autoplay" allowfullscreen></iframe>
+</div>
 
 </body>
 </html>
