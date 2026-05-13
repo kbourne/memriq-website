@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Agentic Engineer — Keith Bourne · MADS Seminar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #f6f4ef;          /* warm off-white */
+    --paper-edge:   #ecead9;          /* slightly deeper for accents */
+    --ink:          #14131a;          /* near-black */
+    --ink-2:        #2a2933;
+    --mute:         #6e6c78;          /* secondary text */
+    --hair:         rgba(20, 19, 26, 0.14);
+    --hair-strong:  rgba(20, 19, 26, 0.28);
+    --accent:       #1f5a64;          /* deep muted teal */
+    --accent-soft:  #d9e2e3;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #0b0b0d;             /* letterbox color */
+    font-family: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  /* ── Stage scaling ────────────────────────────────────────────── */
+  .deck-viewport {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0b0b0d;
+    overflow: hidden;
+  }
+  .deck-canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    flex-shrink: 0;
+    transform-origin: center center;
+    background: var(--paper);
+  }
+  .deck-canvas > section {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .deck-canvas > section.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Every slide */
+  .deck-canvas > section {
+    width: 1920px;
+    height: 1080px;
+    background: var(--paper);
+    color: var(--ink);
+    box-sizing: border-box;
+    padding: 96px 140px 110px;
+    overflow: hidden;
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.005em;
+  }
+
+  /* Footer treatment (shared) */
+  .footer {
+    position: absolute;
+    left: 140px;
+    right: 140px;
+    bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-top: 22px;
+    border-top: 1px solid var(--hair);
+  }
+  .footer .right { font-variant-numeric: tabular-nums; }
+  .footer .left  { font-family: "Geist Mono", ui-monospace, monospace; text-transform: none; letter-spacing: 0; font-size: 16px; }
+
+  /* Slide-eyebrow + title */
+  .eyebrow {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 28px;
+  }
+  .title {
+    font-size: 88px;
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0 0 56px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  /* List style for "clean vertical list, not bullets" */
+  .vlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    font-size: 36px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: var(--ink-2);
+    max-width: 1500px;
+    letter-spacing: -0.01em;
+  }
+  .vlist li {
+    padding-left: 44px;
+    position: relative;
+    text-wrap: pretty;
+  }
+  .vlist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.78em;
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vlist.tight { gap: 22px; font-size: 32px; }
+  .vlist.huge  { gap: 36px; font-size: 40px; }
+
+  em.accent, .accent-text { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  /* ─── SLIDE 1 — TITLE ─── */
+  .s-title {
+    padding: 110px 140px 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .s-title .markline {
+    width: 96px;
+    height: 4px;
+    background: var(--accent);
+    margin: 0 0 56px;
+  }
+  .s-title h1 {
+    font-size: 196px;
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin: 0 0 36px;
+    text-wrap: balance;
+    max-width: 1500px;
+  }
+  .s-title .sub {
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    max-width: 1400px;
+  }
+  .s-title .byline {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 18px;
+    color: var(--mute);
+    border-top: 1px solid var(--hair);
+    padding-top: 22px;
+  }
+  .s-title .byline .name { color: var(--ink); font-weight: 500; }
+  .s-title .byline .dot { color: var(--hair-strong); padding: 0 12px; }
+
+  /* ─── SLIDE 3 — PROVOCATION ─── */
+  .s-prov h1 {
+    font-size: 136px;
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin: 0 0 80px;
+    max-width: 1640px;
+    text-wrap: balance;
+  }
+  .s-prov h1 .pct {
+    color: var(--accent);
+    font-feature-settings: "ss01";
+  }
+  .s-prov .support {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 80px;
+    max-width: 1640px;
+    font-size: 28px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    border-top: 1px solid var(--hair);
+    padding-top: 36px;
+  }
+  .s-prov .support .item {
+    padding-left: 56px;
+    position: relative;
+  }
+  .s-prov .support .item .n {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 16px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── SLIDE 4 / 9 — TWO COLUMNS ─── */
+  .twocol {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0 80px;
+    align-items: start;
+  }
+  .twocol .divider {
+    background: var(--hair-strong);
+    align-self: stretch;
+    width: 1px;
+  }
+  .col-head {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 0 0 36px;
+  }
+
+  /* Slide 4 flow chain */
+  .flowchain {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .flowchain .step { display: flex; align-items: baseline; gap: 18px; }
+  .flowchain .step .n {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 14px;
+    color: var(--mute);
+    letter-spacing: 0.08em;
+    min-width: 36px;
+  }
+  .flowchain .arrow {
+    color: var(--hair-strong);
+    font-size: 22px;
+    padding-left: 36px;
+    line-height: 0.6;
+  }
+
+  .closer-italic {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 160px;
+    text-align: center;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    color: var(--ink-2);
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── SLIDE 6 — pipeline ─── */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 28px;
+    position: relative;
+    margin-top: 60px;
+  }
+  .pipeline::before {
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--hair);
+  }
+  .pipeline .step {
+    position: relative;
+    padding-top: 70px;
+  }
+  .pipeline .step .dot {
+    position: absolute;
+    top: 19px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid var(--accent);
+  }
+  .pipeline .step.is-key .dot { background: var(--accent); }
+  .pipeline .step .num {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .pipeline .step .label {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .pipeline .step .sub {
+    font-size: 16px;
+    color: var(--mute);
+    line-height: 1.35;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+  .footnote {
+    margin-top: 100px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 16px;
+    color: var(--mute);
+    line-height: 1.5;
+    max-width: 1400px;
+  }
+
+  /* ─── SLIDE 7 — video + quote ─── */
+  .s7-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 90px;
+    margin-top: 24px;
+  }
+  .video-placeholder {
+    aspect-ratio: 16 / 9;
+    background:
+      repeating-linear-gradient(135deg,
+        rgba(31,90,100,0.07) 0 14px,
+        rgba(31,90,100,0) 14px 28px),
+      var(--paper-edge);
+    border: 1px solid var(--hair-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .video-placeholder .vp-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper);
+    padding: 8px 14px;
+    border: 1px solid var(--hair-strong);
+  }
+  .video-caption {
+    margin-top: 22px;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 880px;
+  }
+  .video-caption strong { color: var(--ink); font-weight: 500; }
+  .s7-quote {
+    align-self: center;
+    font-family: "Geist", sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: 36px;
+    text-wrap: pretty;
+  }
+  .s7-quote .attr {
+    display: block;
+    margin-top: 22px;
+    font-style: normal;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 14px;
+    color: var(--mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ─── SLIDE 9 quote ─── */
+  .pullquote {
+    margin-top: 80px;
+    padding: 40px 60px 40px 60px;
+    border-top: 1px solid var(--hair);
+    text-align: center;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ─── SLIDE 10 callout ─── */
+  .callout {
+    margin-top: 64px;
+    border-top: 1px solid var(--accent);
+    padding-top: 28px;
+    max-width: 1500px;
+    font-size: 26px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.005em;
+  }
+  .callout strong { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  /* ─── SLIDE 11 ─── */
+  .s-experiment .title { max-width: 1600px; font-size: 76px; }
+  .s-experiment .vlist { font-size: 32px; gap: 32px; }
+  .s-experiment .vlist .lead { color: var(--ink); font-weight: 500; }
+  .s-experiment .podfoot {
+    position: absolute;
+    left: 140px;
+    bottom: 130px;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--mute);
+    border-top: 1px solid var(--hair);
+    padding-top: 18px;
+    width: 760px;
+  }
+  .s-experiment .podfoot .tag {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-style: normal;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-right: 12px;
+  }
+
+  /* ─── SLIDE 12 — closing ─── */
+  .playbook {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px 90px;
+    margin-top: 12px;
+  }
+  .playbook .item {
+    display: flex;
+    gap: 32px;
+    align-items: baseline;
+  }
+  .playbook .item .pn {
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+    font-feature-settings: "ss01";
+    min-width: 110px;
+    font-variant-numeric: tabular-nums;
+  }
+  .playbook .item .pt {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .contact {
+    position: absolute;
+    left: 140px;
+    right: 140px;
+    bottom: 110px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 80px;
+    border-top: 1px solid var(--hair);
+    padding-top: 22px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 16px;
+    color: var(--mute);
+  }
+  .contact .row { display: flex; gap: 16px; align-items: baseline; }
+  .contact .row .k {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 13px;
+    min-width: 92px;
+  }
+  .contact .row .v { color: var(--ink-2); }
+
+  /* shared utilities */
+  .stack-lg > * + * { margin-top: 28px; }
+
+  /* slide 5 grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px 100px;
+    max-width: 1640px;
+    font-size: 32px;
+    line-height: 1.35;
+    color: var(--ink-2);
+  }
+  .grid-2 .it { padding-left: 44px; position: relative; }
+  .grid-2 .it::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .grid-2 .it .lead {
+    display: block;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck-viewport">
+<div class="deck-canvas" id="deck">
+
+  <!-- ─── SLIDE 1 ─── -->
+  <section data-screen-label="01 Title" class="s-title">
+    <div>
+      <div class="markline"></div>
+      <div class="eyebrow">MADS Seminar Series · May 13, 2026</div>
+      <h1>The Agentic Engineer</h1>
+      <div class="sub">How AI is reshaping what it means to build software.</div>
+    </div>
+    <div class="byline">
+      <span><span class="name">Keith Bourne</span><span class="dot">·</span>MADS '22<span class="dot">·</span>Forward Deployed AI Engineer, Tribe AI</span>
+      <span>01 / 12</span>
+    </div>
+  </section>
+
+  <!-- ─── SLIDE 2 ─── -->
+  <section data-screen-label="02 Orientation">
+    <div class="eyebrow">01 — Hello</div>
+    <h2 class="title">A quick orientation.</h2>
+    <ul class="vlist huge">
+      <li>Forward Deployed AI Engineer at <em class="accent">Tribe AI</em>.</li>
+      <li>Previously: multi-agent platform at TIFIN; GenAI infrastructure at Johnson &amp; Johnson.</li>
+      <li>Author, <em class="accent">Unlocking Data with Generative AI and RAG</em> — Packt, 2 editions, top-10 Amazon AI.</li>
+      <li>MADS '22 · MBA, Babson · 15+ years shipping production AI.</li>
+    </ul>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">02 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 3 — PROVOCATION ─── -->
+  <section data-screen-label="03 Provocation" class="s-prov">
+    <div class="eyebrow">02 — The provocation</div>
+    <h1>I shipped a multi-agent platform last year.<br>I typed about <span class="pct">5%</span> of the code.</h1>
+    <div class="support">
+      <div class="item">TIFIN: 15+ fintech companies, one agentic platform sitting above all of them.</div>
+      <div class="item">Cleared months of bug backlog across 15 companies in under a week.</div>
+      <div class="item">Built for <em class="accent">agentic Kaizen</em> — continuous improvement across eng, HR, finance, support.</div>
+      <div class="item">I architected it. Agents built it.</div>
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">03 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 4 — LOOP ─── -->
+  <section data-screen-label="04 The loop has changed">
+    <div class="eyebrow">03 — The loop</div>
+    <h2 class="title">The loop has changed.</h2>
+
+    <div class="twocol">
+      <div>
+        <div class="col-head">Then</div>
+        <div class="flowchain">
+          <div class="step"><span class="n">01</span>Engineer</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">02</span>IDE</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">03</span>Compile</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">04</span>Debug</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">05</span>Repeat</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div class="col-head">Now</div>
+        <div class="flowchain">
+          <div class="step"><span class="n">01</span>Human</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">02</span>Plan</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">03</span>Agents</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">04</span>Review</div>
+          <div class="arrow">↓</div>
+          <div class="step"><span class="n">05</span>Verify</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="closer-italic">From authoring code &nbsp;<span style="color:var(--hair-strong)">→</span>&nbsp; to authoring intent and verification.</div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">04 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 5 — DEFINITION ─── -->
+  <section data-screen-label="05 Agentic engineering, defined">
+    <div class="eyebrow">04 — Definition</div>
+    <h2 class="title">Agentic engineering, defined.</h2>
+    <div class="grid-2">
+      <div class="it"><span class="lead">Specifications, not snippets.</span>You write specs dense enough that agents can execute them.</div>
+      <div class="it"><span class="lead">Systems, not lines of code.</span>You design how the parts fit, not how each line reads.</div>
+      <div class="it"><span class="lead">Judgment is the human's job.</span>You stay in the loop for system design, verification, and taste.</div>
+      <div class="it"><span class="lead">The PRD is the primary artifact.</span>Product requirements as executable input — not a doc someone reads after.</div>
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">05 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 6 — PIPELINE ─── -->
+  <section data-screen-label="06 How a feature gets built">
+    <div class="eyebrow">05 — In practice</div>
+    <h2 class="title">How a feature gets built, today.</h2>
+
+    <div class="pipeline">
+      <div class="step">
+        <div class="dot"></div>
+        <div class="num">01</div>
+        <div class="label">Open-ended thinking</div>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <div class="num">02</div>
+        <div class="label">Initial plan</div>
+      </div>
+      <div class="step is-key">
+        <div class="dot"></div>
+        <div class="num">03</div>
+        <div class="label">PRD</div>
+        <div class="sub">with audit + test scope baked in</div>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <div class="num">04</div>
+        <div class="label">Prompt suite</div>
+      </div>
+      <div class="step is-key">
+        <div class="dot"></div>
+        <div class="num">05</div>
+        <div class="label">Claude Code (CLI)</div>
+        <div class="sub">executes</div>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <div class="num">06</div>
+        <div class="label">Audit agent</div>
+        <div class="sub">full test suite + auto-fix on findings</div>
+      </div>
+      <div class="step is-key">
+        <div class="dot"></div>
+        <div class="num">07</div>
+        <div class="label">Final manual review</div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      I use LLMs at every step from 1 → 6. &nbsp; Production work runs <span style="color:var(--accent)">3–20 CLIs in parallel.</span>
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">06 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 7 — VIDEO + QUOTE ─── -->
+  <section data-screen-label="07 What this looks like">
+    <div class="eyebrow">06 — Live</div>
+    <h2 class="title" style="font-size:72px; margin-bottom:24px;">What this actually looks like.</h2>
+
+    <div class="s7-grid">
+      <div>
+        <div class="video-placeholder">
+          <div class="vp-label">Overlay video here · Cowork → Claude Code</div>
+        </div>
+        <div class="video-caption">
+          <strong>Cowork (left)</strong> orchestrates from a PRD I built in ~1 hour beforehand — generating prompts I paste into <strong>Claude Code (right)</strong>. Includes the audit prompts.
+        </div>
+      </div>
+      <blockquote class="s7-quote">
+        “You still need a strong technical background. I knew the data schema I needed — when I saw the agent had altered it mid-build, in a way that would have broken downstream, I stopped the show. You can't vibe-code your way out of that.”
+      </blockquote>
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">07 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 8 — JUDGMENT ─── -->
+  <section data-screen-label="08 Where human judgment wins">
+    <div class="eyebrow">07 — Human edges</div>
+    <h2 class="title">Where human judgment still wins.</h2>
+    <ul class="vlist">
+      <li>Ambiguous problems agents will confidently get wrong.</li>
+      <li>System design across boundaries agents can't see.</li>
+      <li>Knowing when to stop — when a solution is wrong enough to scrap.</li>
+      <li>Designing <em class="accent">evaluations</em> — what does “good” even mean here?</li>
+      <li>Taste. The thing you can't write down.</li>
+    </ul>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">08 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 9 — SKILLS SHIFT ─── -->
+  <section data-screen-label="09 The skills shift">
+    <div class="eyebrow">08 — The shift</div>
+    <h2 class="title" style="font-size:64px; max-width:1600px;">The skills shift — and why data scientists are unusually well-positioned.</h2>
+
+    <div class="twocol" style="margin-bottom:0;">
+      <div>
+        <div class="col-head" style="color:var(--mute);">Depreciating</div>
+        <ul class="vlist tight" style="font-size:28px;gap:18px;">
+          <li>Syntax fluency</li>
+          <li>Boilerplate</li>
+          <li>Glue code</li>
+          <li>Memorized APIs</li>
+          <li>Framework trivia</li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div class="col-head">Appreciating</div>
+        <ul class="vlist tight" style="font-size:28px;gap:18px;">
+          <li>Model literacy</li>
+          <li>NLP fundamentals</li>
+          <li>Statistical intuition</li>
+          <li>System design</li>
+          <li><em class="accent" style="font-weight:600;">Evaluation</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      “Every leader says eval matters. It's the first thing cut when the team is behind. <em class="accent" style="font-style:italic;">Agentic engineering doesn't let you cut it.</em>”
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">09 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 10 — MADS ─── -->
+  <section data-screen-label="10 What MADS trained you for">
+    <div class="eyebrow">09 — For MADS</div>
+    <h2 class="title" style="font-size:64px;">MADS didn't teach you to compete with agents.<br><span class="accent-text">It taught you the skills agents depend on.</span></h2>
+    <ul class="vlist" style="font-size:30px;gap:22px;">
+      <li>Understanding what's under the model — not just calling APIs.</li>
+      <li>NLP foundations — retrieval, embeddings, tokenization, why they behave that way.</li>
+      <li>Eval design — measure it or it didn't happen.</li>
+      <li>Statistical intuition — knowing when a result is real.</li>
+      <li>Problem decomposition — the precondition for writing PRDs agents can execute.</li>
+    </ul>
+    <div class="callout">
+      And you still need a strong technical background — <strong>you can't course-correct an agent if you don't know what right looks like.</strong> That's what MADS gave you.
+    </div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">10 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 11 — WHERE THIS IS HEADING ─── -->
+  <section data-screen-label="11 Where this is heading" class="s-experiment">
+    <div class="eyebrow">10 — The experiment</div>
+    <h2 class="title">I don't know where this is going.<br>I'm running an experiment to find out.</h2>
+    <ul class="vlist">
+      <li><span class="lead">Memriq.ai — my thought experiment.</span> What if you pushed to the limit and built a company with only agents? Not a prediction. A way to learn what's possible.</li>
+      <li><span class="lead">My actual belief: push humans up the value equation.</span> Less typing, less repetition. More judgment, taste, design, framing.</li>
+      <li><span class="lead">The point isn't replacement.</span> It's about humans operating at the top of their stack.</li>
+    </ul>
+    <div class="podfoot"><span class="tag">Podcast</span><em>Agentification of enterprises = Kaizen for the AI era.</em></div>
+    <div class="footer"><span class="left">The Agentic Engineer · K. Bourne</span><span class="right">11 / 12</span></div>
+  </section>
+
+  <!-- ─── SLIDE 12 — CLOSING / PLAYBOOK ─── -->
+  <section data-screen-label="12 Playbook" class="s-closing">
+    <div class="eyebrow">11 — Closing</div>
+    <h2 class="title" style="font-size:64px; max-width:1640px;">If you're in MADS right now,<br>here's the playbook.</h2>
+
+    <div class="playbook">
+      <div class="item"><div class="pn">01</div><div class="pt">Get good at writing PRDs — plans dense enough agents can execute them.</div></div>
+      <div class="item"><div class="pn">02</div><div class="pt">Build serious eval muscle. Make it your edge.</div></div>
+      <div class="item"><div class="pn">03</div><div class="pt">Use agents end-to-end on something real before you graduate.</div></div>
+      <div class="item"><div class="pn">04</div><div class="pt">Stay opinionated about what humans are actually for.</div></div>
+    </div>
+
+    <div class="contact">
+      <div class="row"><span class="k">Demo</span><span class="v">loom.com/share/9f8af626ded245c78a75331e62cb2403</span></div>
+      <div class="row"><span class="k">Memriq</span><span class="v">memriq.ai</span></div>
+      <div class="row"><span class="k">Book</span><span class="v">Unlocking Data with Generative AI and RAG · Packt</span></div>
+      <div class="row"><span class="k">Email</span><span class="v">bourne&#64;umich.edu</span></div>
+    </div>
+    <div class="footer" style="border-top:none;"><span class="left">Thank you.</span><span class="right">12 / 12</span></div>
+  </section>
+
+</div><!-- /.deck-canvas -->
+</div><!-- /.deck-viewport -->
+
+<script>
+  (function () {
+    var deck = document.getElementById('deck');
+    var slides = Array.prototype.slice.call(deck.querySelectorAll(':scope > section'));
+    var idx = 0;
+
+    function fit() {
+      var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      deck.style.transform = 'scale(' + s + ')';
+    }
+    function show(n) {
+      idx = Math.max(0, Math.min(slides.length - 1, n));
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].classList.toggle('is-active', i === idx);
+      }
+      try { history.replaceState(null, '', '#' + (idx + 1)); } catch (e) {}
+    }
+    function next() { show(idx + 1); }
+    function prev() { show(idx - 1); }
+    function toggleFullscreen() {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    }
+
+    window.addEventListener('resize', fit);
+    window.addEventListener('keydown', function (e) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault(); next(); break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'PageUp':
+          e.preventDefault(); prev(); break;
+        case 'Home':
+          e.preventDefault(); show(0); break;
+        case 'End':
+          e.preventDefault(); show(slides.length - 1); break;
+        case 'f': case 'F':
+          e.preventDefault(); toggleFullscreen(); break;
+      }
+    });
+
+    // Deep-link via #N (1-indexed)
+    var m = (location.hash || '').match(/^#(\d+)$/);
+    var start = m ? Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1)) : 0;
+
+    fit();
+    show(start);
+  })();
+</script>
+
+</body>
+</html>
