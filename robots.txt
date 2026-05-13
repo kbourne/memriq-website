@@ -1,0 +1,27 @@
+# Block the talk deck from search engines and AI crawlers.
+# Anyone with the direct link can still view it.
+
+User-agent: *
+Disallow: /the_agentic_engineer.html
+
+# Specifically opt out of common AI/LLM training crawlers
+User-agent: GPTBot
+Disallow: /the_agentic_engineer.html
+
+User-agent: ClaudeBot
+Disallow: /the_agentic_engineer.html
+
+User-agent: Claude-Web
+Disallow: /the_agentic_engineer.html
+
+User-agent: anthropic-ai
+Disallow: /the_agentic_engineer.html
+
+User-agent: PerplexityBot
+Disallow: /the_agentic_engineer.html
+
+User-agent: Google-Extended
+Disallow: /the_agentic_engineer.html
+
+User-agent: CCBot
+Disallow: /the_agentic_engineer.html
