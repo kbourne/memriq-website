@@ -615,6 +615,37 @@
     background: rgba(0, 0, 0, 0.9);
   }
 
+  /* Navigation arrows (touch + click) */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(20, 19, 26, 0.28);
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-family: inherit;
+    transition: background 0.15s, opacity 0.15s;
+    opacity: 0.55;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-btn:hover {
+    background: rgba(20, 19, 26, 0.7);
+    opacity: 1;
+  }
+  #nav-prev { left: 24px; }
+  #nav-next { right: 24px; }
+
   /* Memriq mark on slide 11 */
   .s-experiment .mark {
     position: absolute;
@@ -992,8 +1023,16 @@
 
     fit();
     show(start);
+
+    // Expose nav for click buttons
+    window.deckNext = next;
+    window.deckPrev = prev;
   })();
 </script>
+
+<!-- Navigation arrows (visible on touch + click) -->
+<button id="nav-prev" class="nav-btn" aria-label="Previous slide" title="Previous slide" onclick="window.deckPrev()">‹</button>
+<button id="nav-next" class="nav-btn" aria-label="Next slide" title="Next slide" onclick="window.deckNext()">›</button>
 
 <!-- Persistent corner video overlay (shown on every slide) -->
 <div id="corner-video">
